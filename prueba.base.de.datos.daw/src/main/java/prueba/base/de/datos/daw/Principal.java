@@ -39,10 +39,11 @@ public class Principal {
 				System.out.println("Dime tu telefono");
 				int telefono=Integer.parseInt(sc.nextLine());
 				try {
-					HashMap<String,String> cols=new HashMap<String,String>();
+					HashMap<String,Object> cols=new HashMap<String,Object>();
 					cols.put("email", email);
 					cols.put("nombre",nombre);
 					cols.put("password", contraseña);
+					cols.put("telefono",telefono);
 					DAO.insertar("cliente",cols);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -53,7 +54,7 @@ public class Principal {
 				System.out.println("Dime el email de la persona a borrar");
 				String emailABorrar=sc.nextLine();
 				try {
-					HashMap<String,String> columnasBorrar=new HashMap<String,String>();
+					HashMap<String,Object> columnasBorrar=new HashMap<String,Object>();
 					columnasBorrar.put("email", emailABorrar);
 					if(DAO.borrar("cliente",columnasBorrar)==0) {
 						System.out.println("No se ha podido borrar: El email no existía");
@@ -66,7 +67,37 @@ public class Principal {
 				}
 				break;
 			case 3:
-				
+				System.out.println("Dime el email del cliente a modificar");
+				String emailMod=sc.nextLine();
+				HashMap<String,Object> valoresNuevos=new HashMap<String,Object>();
+				System.out.println("¿Qué quieres cambiar?\n\t1-email"
+						+ "\n\t2-nombre\n\t3-password\n\t4-telefono");
+				switch(Byte.parseByte(sc.nextLine())) {
+				case 1:
+					System.out.println("Dime el nuevo email");
+					valoresNuevos.put("email",sc.nextLine());
+					break;
+				case 2:
+					System.out.println("Dime el nuevo nombre");
+					valoresNuevos.put("nombre",sc.nextLine());
+					break;
+				case 3: 
+					System.out.println("Dime nuevo password");
+					valoresNuevos.put("password",sc.nextLine());
+					break;
+				case 4:
+					System.out.println("Dime el nuevo teléfono");
+					valoresNuevos.put("telefono",Integer.parseInt(sc.nextLine()));
+					break;
+				}
+				HashMap<String,Object> restriccionesMod=new HashMap<String,Object>();
+				restriccionesMod.put("email",emailMod);
+				try {
+					DAO.actualizar("cliente", valoresNuevos, restriccionesMod);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				break;
 			case 4:
 				try {
@@ -75,7 +106,7 @@ public class Principal {
 					columnasSacar.add("password");
 					columnasSacar.add("telefono");
 					columnasSacar.add("nombre");
-					HashMap<String,String> restricciones=new HashMap<String,String>();
+					HashMap<String,Object> restricciones=new HashMap<String,Object>();
 					ArrayList<Object> cliente=
 					DAO.consultar("cliente",columnasSacar,restricciones);
 					for(byte i=0;i<cliente.size();i++) {

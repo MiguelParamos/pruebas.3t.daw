@@ -2,9 +2,13 @@ package prueba.base.de.datos.daw;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
 
 import Utils.DAO;
@@ -65,7 +69,24 @@ public class Principal {
 				
 				break;
 			case 4:
-				
+				try {
+					LinkedHashSet columnasSacar=new LinkedHashSet<String>();
+					columnasSacar.add("email");
+					columnasSacar.add("password");
+					columnasSacar.add("telefono");
+					columnasSacar.add("nombre");
+					HashMap<String,String> restricciones=new HashMap<String,String>();
+					ArrayList<Object> cliente=
+					DAO.consultar("cliente",columnasSacar,restricciones);
+					for(byte i=0;i<cliente.size();i++) {
+						System.out.print(cliente.get(i)+" : ");
+					}
+					System.out.println();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			}
 		}while(opcion!=0);

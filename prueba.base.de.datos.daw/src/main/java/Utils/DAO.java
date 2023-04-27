@@ -2,10 +2,14 @@ package Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map.Entry;
 
 public abstract class DAO {
@@ -70,6 +74,46 @@ public abstract class DAO {
 		int ret=smt.executeUpdate(consulta);
 		desconectar(smt);
 		return ret;
+	}
+	
+	public static ArrayList<Object> consultar(String tabla,
+			LinkedHashSet<String> columnasSelect,
+			HashMap<String,String> restricciones) throws SQLException{
+			Statement smt=conectar();
+			
+			String query="select ";
+			Iterator ith=columnasSelect.iterator();
+			while(ith.hasNext()) {
+				query+=(String)ith.next()+",";
+			}
+			query=query.substring(0,query.length()-1)+" from "+tabla+
+					(restricciones.size()>0?" where ":"");
+			//select email,nombre,password,telefono from cliente where email='asdad' and 
+			Iterator itm=restricciones.entrySet().iterator();
+			while(itm.hasNext()) {
+				Entry actual=(Entry)itm.next();
+				query+=(String)actual.getKey()+"='"+(String)actual.getValue()+"' and ";
+			}
+			if(restricciones.size()>0) {
+				query=query.substring(0,query.length()-5);
+			}
+			System.out.println(query);
+			ResultSet cursor=smt.executeQuery(query);
+			ArrayList<Object> fila=new ArrayList<Object>();
+			while(cursor.next()) {
+				Iterator hsCols=columnasSelect.iterator();
+				while(hsCols.hasNext()) {
+					String nombreCol=(String)hsCols.next();
+					try {
+						fila.add(cursor.getInt(cursor.findColumn(nombreCol)));
+					}catch(NumberFormatException | SQLException e) {
+						fila.add(cursor.getString(cursor.findColumn(nombreCol)));
+					}
+				}
+				
+			}
+			desconectar(smt);
+			return fila;
 	}
 	
 }

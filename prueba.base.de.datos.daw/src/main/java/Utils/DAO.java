@@ -110,14 +110,17 @@ public abstract class DAO {
 		ResultSet cursor = smt.executeQuery(query);
 		ArrayList<Object> fila = new ArrayList<Object>();
 		while (cursor.next()) {
-			Iterator hsCols = columnasSelect.iterator();
-			while (hsCols.hasNext()) {
-				String nombreCol = (String) hsCols.next();
-				try {
-					fila.add(cursor.getInt(cursor.findColumn(nombreCol)));
-				} catch (NumberFormatException | SQLException e) {
-					fila.add(cursor.getString(cursor.findColumn(nombreCol)));
+			Iterator hscl = columnasSelect.iterator();
+			while (hscl.hasNext()) {
+				String nombreCl = (String) hscl.next();
+				Object valorColumna = cursor.getObject(cursor.findColumn(nombreCl));
+				Object valor = null;
+				if (valorColumna.getClass() == String.class) {
+					valor = (String) valorColumna;
+				} else if (valorColumna.getClass() == Integer.class) {
+					valor = (int) valorColumna;
 				}
+				fila.add(valor);
 			}
 
 		}
@@ -147,13 +150,13 @@ public abstract class DAO {
 				query += actual.getKey() + " = '" + actual.getValue() + "' and ";
 			}
 		}
-		query=query.substring(0,query.length()-5);
-		
-		Statement smt=conectar();
+		query = query.substring(0, query.length() - 5);
+
+		Statement smt = conectar();
 		System.out.println(query);
-		int ret=smt.executeUpdate(query);
+		int ret = smt.executeUpdate(query);
 		desconectar(smt);
-		
+
 		return ret;
 	}
 

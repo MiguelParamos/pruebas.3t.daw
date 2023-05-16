@@ -5,11 +5,18 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import clases.Cliente;
+import excepciones.ClienteNoExisteException;
+import excepciones.ContraseñaInvalidaException;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class PantallaLogin extends JPanel{
 	private JTextField campoUsuario;
@@ -27,6 +34,26 @@ public class PantallaLogin extends JPanel{
 				String usuario=campoUsuario.getText();
 				String contraseña=new String(campoContraseña.getPassword());
 				System.out.println(usuario+" : "+contraseña);
+				try {
+					ventana.clienteLogado=new Cliente(usuario,contraseña);
+					JOptionPane.showMessageDialog(ventana,"Bienvenid@, "
+					+ventana.clienteLogado.getNombre(),"Inicio de sesión exitoso",
+					JOptionPane.INFORMATION_MESSAGE);
+					ventana.cambiarAPantalla(PantallaListado.class);
+					
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(ventana, e1.getMessage(),
+						"Login fallido",JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				} catch (ClienteNoExisteException e1) {
+					JOptionPane.showMessageDialog(ventana, "El cliente no existe",
+						"Login fallido",JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				} catch (ContraseñaInvalidaException e1) {
+					JOptionPane.showMessageDialog(ventana, "La contraseña no es correcta",
+						"Login fallido",JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				}
 			}
 		});
 		botonLogin.setToolTipText("Pínchame para iniciar sesión");

@@ -106,7 +106,10 @@ public class Cliente {
 	   ArrayList<Object> listaClientes= new ArrayList<>();
 	   listaClientes=DAO.consultar("cliente", columnasSacar, restricciones);
 	   for(byte i =0;i<listaClientes.size();i+=3) {
-		   Cliente cliente = new Cliente((String)listaClientes.get(i),(String)listaClientes.get(i+2),(int)listaClientes.get(i+1));
+		   Cliente cliente = new Cliente(
+				   (String)listaClientes.get(i),
+				   (String)listaClientes.get(i+2),
+				   (int)listaClientes.get(i+1));
 	   clientes.add(cliente);
 	   }
 	   return clientes;

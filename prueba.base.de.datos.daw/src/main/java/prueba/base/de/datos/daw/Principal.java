@@ -1,5 +1,9 @@
 package prueba.base.de.datos.daw;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,6 +15,8 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+
 import Utils.DAO;
 import clases.Cliente;
 import interfaces.Ventana;
@@ -18,14 +24,7 @@ import interfaces.Ventana;
 public class Principal {
 
 	public static void main(String[] args) {
-		try {
-			ArrayList<Cliente> clientes = Cliente.getTodos();
-			for(Cliente c: clientes) {
-				System.out.println("Nombre: "+c.getNombre()+", Email: "+c.getEmail()+" ,Telefono: "+c.getTelefono());
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Ventana v=new Ventana();
 	}
 
 }

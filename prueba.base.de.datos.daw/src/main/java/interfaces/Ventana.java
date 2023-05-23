@@ -1,5 +1,10 @@
 package interfaces;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import clases.Cliente;
@@ -14,6 +19,7 @@ public class Ventana extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setContentPane(new PantallaLogin(this));
+		this.setIconImage(new ImageIcon("./fotoclase.jpg").getImage());
 		this.setVisible(true);
 	}
 

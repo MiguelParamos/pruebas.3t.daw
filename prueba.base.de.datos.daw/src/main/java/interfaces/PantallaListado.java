@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
 
-public class PantallaListado extends JPanel{
+public class PantallaListado extends PanelMadre{
 	private Ventana ventana;
 	
 	public PantallaListado(Ventana v) {

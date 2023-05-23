@@ -14,7 +14,11 @@ public class Cliente {
     private String email;
     private int telefono;
    
-   
+   public Cliente(String nombre,String email, int telefono) {
+	   this.nombre=nombre;
+	   this.email=email;
+	   this.telefono=telefono;
+   }
    
     public Cliente(String nombre, String email, int telefono,String contraseña) throws SQLException {
         super();
@@ -92,7 +96,21 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-   
+   public static ArrayList<Cliente> getTodos() throws SQLException{
+	   LinkedHashSet<String> columnasSacar = new LinkedHashSet<>();
+	   columnasSacar.add("email");
+	   columnasSacar.add("telefono");
+	   columnasSacar.add("nombre");
+	   HashMap<String,Object> restricciones = new HashMap<>();
+	   ArrayList<Cliente> clientes = new ArrayList<>();
+	   ArrayList<Object> listaClientes= new ArrayList<>();
+	   listaClientes=DAO.consultar("cliente", columnasSacar, restricciones);
+	   for(byte i =0;i<listaClientes.size();i+=3) {
+		   Cliente cliente = new Cliente((String)listaClientes.get(i),(String)listaClientes.get(i+2),(int)listaClientes.get(i+1));
+	   clientes.add(cliente);
+	   }
+	   return clientes;
+   }
 
     @Override
     public String toString() {

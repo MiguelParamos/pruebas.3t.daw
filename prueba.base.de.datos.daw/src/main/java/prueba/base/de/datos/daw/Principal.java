@@ -12,12 +12,20 @@ import java.util.LinkedHashSet;
 import java.util.Scanner;
 
 import Utils.DAO;
+import clases.Cliente;
 import interfaces.Ventana;
 
 public class Principal {
 
 	public static void main(String[] args) {
-		Ventana v=new Ventana();
+		try {
+			ArrayList<Cliente> clientes = Cliente.getTodos();
+			for(Cliente c: clientes) {
+				System.out.println("Nombre: "+c.getNombre()+", Email: "+c.getEmail()+" ,Telefono: "+c.getTelefono());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

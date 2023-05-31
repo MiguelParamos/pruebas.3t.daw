@@ -2,9 +2,17 @@ package interfaces;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+
+import auxiliares.interfaz.BotonAzul;
+import auxiliares.interfaz.BotonRojo;
+import clases.Cliente;
+
 import javax.swing.BoxLayout;
 
 public class PantallaListado extends PanelMadre{
@@ -21,16 +29,16 @@ public class PantallaListado extends PanelMadre{
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.SOUTH);
 		
-		JButton btnNewButton = new JButton("New button");
+		BotonAzul btnNewButton = new BotonAzul("New button");
 		panel.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("New button");
+		BotonAzul btnNewButton_1 = new BotonAzul("New button");
 		panel.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("New button");
+		BotonRojo btnNewButton_2 = new BotonRojo("New button");
 		panel.add(btnNewButton_2);
 		
-		JButton btnNewButton_3 = new JButton("New button");
+		BotonAzul btnNewButton_3 = new BotonAzul("New button");
 		panel.add(btnNewButton_3);
 		
 		JScrollPane lista = new JScrollPane();
@@ -40,8 +48,14 @@ public class PantallaListado extends PanelMadre{
 		lista.setViewportView(contenedorElementos);
 		contenedorElementos.setLayout(new BoxLayout(contenedorElementos, BoxLayout.Y_AXIS));
 		
-		for(byte i=0;i<100;i++) {
-			contenedorElementos.add(new ElementoListaUsuario(ventana,ventana.clienteLogado));
+		try {
+			ArrayList<Cliente> clientes=Cliente.getTodos();
+			for(short i=0;i<clientes.size();i++) {
+				contenedorElementos.add(
+				new ElementoListaUsuario(ventana,clientes.get(i)));
+			}
+		}catch(SQLException s) {
+			s.printStackTrace();
 		}
 	}
 	

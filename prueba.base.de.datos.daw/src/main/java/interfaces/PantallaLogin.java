@@ -3,12 +3,14 @@ package interfaces;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.swing.SwingConstants;
 
+import auxiliares.interfaz.BotonAzul;
 import clases.Cliente;
 import excepciones.ClienteNoExisteException;
 import excepciones.ContraseñaInvalidaException;
@@ -73,7 +75,7 @@ public class PantallaLogin extends PanelMadre {
 		botonLogin.setBounds(374, 269, 192, 93);
 		add(botonLogin);
 
-		JButton botonRegistro = new JButton("Regístrate");
+		final BotonAzul botonRegistro = new BotonAzul("Regístrate");
 		botonRegistro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -81,9 +83,6 @@ public class PantallaLogin extends PanelMadre {
 			}
 		});
 		botonRegistro.setToolTipText("Pínchame para ir a registrarte");
-		botonRegistro.setForeground(new Color(255, 255, 255));
-		botonRegistro.setFont(new Font("Arial", Font.BOLD, 18));
-		botonRegistro.setBackground(new Color(0, 64, 128));
 		botonRegistro.setBounds(182, 269, 192, 93);
 		add(botonRegistro);
 

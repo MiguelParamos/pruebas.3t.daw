@@ -5,10 +5,14 @@ import javax.swing.JPanel;
 import clases.Cliente;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ElementoListaUsuario extends JPanel{
 	Ventana ventana;
@@ -41,6 +45,18 @@ public class ElementoListaUsuario extends JPanel{
 		gbc_btnNewButton.gridx = 4;
 		gbc_btnNewButton.gridy = 0;
 		add(btnNewButton, gbc_btnNewButton);
+		
+		btnNewButton.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+				JOptionPane.showMessageDialog(ventana, usuarioActual.getEmail(),
+						usuarioActual.getNombre(),
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+		});
 		
 		JLabel labelNombre = new JLabel(usuarioActual.getNombre());
 		GridBagConstraints gbc_labelNombre = new GridBagConstraints();
